@@ -1,0 +1,171 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Todo List Api",
+        "description": "Demo Todo List Api",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/auth/register": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Crie um novo usuário",
+                "description": "Este endpoint cria um registro de um novo usuário",
+                "operationId": "d764dd091cc4494ae0baf360b03319f3",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password",
+                                    "name",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Gabriel"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "gabriel@example.org"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "12345678"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "example": "12345678"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuário criado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User successfully registered"
+                                        },
+                                        "user": {
+                                            "type": "string",
+                                            "example": "user"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "token"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erros de validação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The team name must be a string. (and 4 more errors)"
+                                        },
+                                        "errors": {
+                                            "type": "string",
+                                            "example": "..."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/cars": {
+            "get": {
+                "tags": [
+                    "Cars"
+                ],
+                "summary": "Obtenha dados de carros",
+                "description": "Retorna uma lista de carros cadastrados",
+                "operationId": "f77770002735f9a6074317ea0823931a",
+                "responses": {
+                    "200": {
+                        "description": "Search done.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "example": "5"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Car One"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "Description for car one"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "A short description for oauth2 security",
+                "scheme": "bearer",
+                "in": "header",
+                "bearerAuth": "bearerAuth",
+                "bearerFormat": "JWT"
+            },
+            "security": {
+                "bearerAuth": []
+            }
+        }
+    }
+}
