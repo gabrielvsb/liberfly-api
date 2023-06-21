@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use OpenApi\Annotations as OA;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 
@@ -20,12 +21,7 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
-    /**
-     * Get a JWT via given credentials.
-     * @param Request $request
-     * @return JsonResponse
-     * @throws ValidationException
-     */
+
     public function login(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -44,9 +40,41 @@ class AuthController extends Controller
     }
 
     /**
-     * Register a new User.
-     * @param Request $request
-     * @return JsonResponse
+     * @OA\POST(
+     *  tags={"User"},
+     *  summary="Crie um novo usuário",
+     *  description="Este endpoint cria um registro de um novo usuário",
+     *  path="/api/auth/register",
+     *  @OA\RequestBody(
+     *      @OA\MediaType(
+     *          mediaType="application/json",
+     *          @OA\Schema(
+     *             required={"email","password","name","password_confirmation"},
+     *             @OA\Property(property="name", type="string", example="Gabriel"),
+     *             @OA\Property(property="email", type="string", example="gabriel@example.org"),
+     *             @OA\Property(property="password", type="string", example="12345678"),
+     *             @OA\Property(property="password_confirmation", type="string", example="12345678"),
+     *          )
+     *      ),
+     *  ),
+     *  @OA\Response(
+     *    response=200,
+     *    description="Usuário criado",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="User successfully registered"),
+     *       @OA\Property(property="user", type="string", example="user"),
+     *       @OA\Property(property="token", type="string", example="token"),
+     *    )
+     *  ),
+     *  @OA\Response(
+     *    response=400,
+     *    description="Erros de validação",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="The team name must be a string. (and 4 more errors)"),
+     *       @OA\Property(property="errors", type="string", example="..."),
+     *    )
+     *  )
+     * )
      */
     public function register(Request $request): JsonResponse
     {

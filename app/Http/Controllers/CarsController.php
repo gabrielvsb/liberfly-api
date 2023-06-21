@@ -4,12 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Models\Car;
 use Illuminate\Http\Request;
+use OpenApi\Annotations as OA;
 
 class CarsController extends Controller
 {
     /**
-     * This method is an endpoint to return all records from cars table
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Get(
+     *     tags={"Cars"},
+     *     summary="Obtenha dados de carros",
+     *     description="Retorna uma lista de carros cadastrados",
+     *     path="/api/cars",
+     *     security={ {"bearerAuth":{}} },
+     *     @OA\Response(
+     *          response=200,
+     *          description="Search done.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="id", type="string", example="5"),
+     *              @OA\Property(property="name", type="string", example="Car One"),
+     *              @OA\Property(property="description", type="string", example="Description for car one"),
+     *          )
+     *     ),
+     *     @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Unauthenticated"),
+     *          )
+     *     )
+     * ),
      */
     public function getAllCars(): \Illuminate\Http\JsonResponse
     {
