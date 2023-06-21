@@ -3,10 +3,13 @@
 namespace Tests\Feature\API;
 
 use App\Models\Car;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class CarsTest extends TestCase
 {
@@ -16,6 +19,9 @@ class CarsTest extends TestCase
      */
     public function test_get_all_cars(): void
     {
+        $user = User::factory()->create();
+        $this->actingAs($user, 'api');
+
         $num_records = 10;
         Car::factory($num_records)->create();
 
