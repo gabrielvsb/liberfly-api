@@ -42,4 +42,30 @@ class CarsTest extends TestCase
             ]
         ]);
     }
+
+    public function test_get_one_car(){
+        $user = User::factory()->create();
+        $this->actingAs($user, 'api');
+
+        $num_records = 10;
+        $cars = Car::factory($num_records)->create();
+        $car = $cars->first();
+        $response = $this->getJson('/api/cars/' . $car->id);
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(1, 'data');
+        $response->assertJsonStructure([
+            'message',
+            'data' => [
+                '*' => [
+                    'id',
+                    'name',
+                    'description',
+                    'created_at',
+                    'updated_at'
+                ]
+            ]
+        ]);
+    }
+
 }
