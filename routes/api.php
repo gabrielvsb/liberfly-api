@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:api'])->group(function() {
     Route::get('cars', [CarsController::class, 'getAllCars']);
+    Route::get('cars/{id}', [CarsController::class, 'getCar']);
 });
 
 Route::middleware(['api'])->prefix('auth')->group(function() {
