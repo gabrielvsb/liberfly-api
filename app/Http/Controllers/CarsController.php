@@ -21,4 +21,17 @@ class CarsController extends Controller
             return response()->json(['message' => $exception->getMessage()], 500);
         }
     }
+
+    public function getCar($idCar)
+    {
+        try {
+            $car = Car::findOr($idCar, function (){
+               return response()->json(['message' => 'Car not found.'], 404);
+            });
+
+            return response()->json(['message' => 'Search done!', 'data' => $car]);
+        }catch (\Exception $exception){
+            return response()->json(['message' => $exception->getMessage()], 500);
+        }
+    }
 }
