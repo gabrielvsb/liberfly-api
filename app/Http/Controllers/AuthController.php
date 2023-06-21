@@ -22,6 +22,41 @@ class AuthController extends Controller
     }
 
 
+    /**
+     * @OA\POST(
+     *  tags={"User"},
+     *  summary="Realize login",
+     *  description="Este endpoint faz o login de um usuário existente",
+     *  path="/api/auth/login",
+     *  @OA\RequestBody(
+     *      @OA\MediaType(
+     *          mediaType="application/json",
+     *          @OA\Schema(
+     *             required={"email","password"},
+     *             @OA\Property(property="email", type="string", example="gabriel@example.org"),
+     *             @OA\Property(property="password", type="string", example="12345678"),
+     *          )
+     *      ),
+     *  ),
+     *  @OA\Response(
+     *    response=200,
+     *    description="Usuário logado",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="access_token", type="string", example="token"),
+     *       @OA\Property(property="token_type", type="string", example="bearer"),
+     *       @OA\Property(property="expires_in", type="string", example="1"),
+     *    )
+     *  ),
+     *  @OA\Response(
+     *    response=400,
+     *    description="Erros de validação",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="The team name must be a string. (and 4 more errors)"),
+     *       @OA\Property(property="errors", type="string", example="..."),
+     *    )
+     *  )
+     * )
+     */
     public function login(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
