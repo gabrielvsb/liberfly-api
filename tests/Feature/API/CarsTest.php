@@ -53,17 +53,14 @@ class CarsTest extends TestCase
         $response = $this->getJson('/api/cars/' . $car->id);
 
         $response->assertStatus(200);
-        $response->assertJsonCount(1, 'data');
         $response->assertJsonStructure([
             'message',
             'data' => [
-                '*' => [
-                    'id',
-                    'name',
-                    'description',
-                    'created_at',
-                    'updated_at'
-                ]
+                'id',
+                'name',
+                'description',
+                'created_at',
+                'updated_at'
             ]
         ]);
     }
